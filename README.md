@@ -2,7 +2,7 @@
 
 A **free, comprehensive, privacy-first** federal income tax calculator for Form 1040. All calculations run 100% in your browser — no data is ever sent to a server.
 
-🔗 **[Live Demo →](https://YOUR_USERNAME.github.io/tax-1040-calculator)**
+🔗 **[Live Demo →](https://buildwithdaves.github.io/tax-1040-calculator)**
 
 ---
 
@@ -60,7 +60,7 @@ Every field has a **?** button with a plain-English explanation of:
 ## 🚀 Getting Started
 
 ### Option 1: Use Online (Recommended)
-Visit the [live demo](https://YOUR_USERNAME.github.io/tax-1040-calculator) — no installation required.
+Visit the [live demo](https://buildwithdaves.github.io/tax-1040-calculator) — no installation required.
 
 ### Option 2: Run Locally
 ```bash
