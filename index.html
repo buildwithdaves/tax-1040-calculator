@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Free, comprehensive 2024 federal income tax calculator for Form 1040. Covers W-2, 1099 types, capital gains, rental income, and more. Photo OCR + manual entry.">
+  <title>1040 Tax Calculator — Tax Year 2024</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Tesseract.js for OCR -->
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+</head>
+<body>
+
+<!-- ── App Header ─────────────────────────────────────────── -->
+<header id="app-header">
+  <div class="header-inner">
+    <div class="logo">
+      <span class="logo-icon">📋</span>
+      <div>
+        <span>1040 Tax Calculator</span>
+        <span class="logo-sub">Tax Year 2024 &nbsp;·&nbsp; Federal Only &nbsp;·&nbsp; Free &amp; Private</span>
+      </div>
+    </div>
+    <div class="header-progress">
+      <div class="progress-label" id="progress-label">Step 1 of 12: Personal Info</div>
+      <div class="progress-track">
+        <div id="progress-bar-fill" style="width:0%"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ── Main Layout ────────────────────────────────────────── -->
+<div id="layout">
+
+  <!-- Step Navigation Dots -->
+  <div id="step-nav-wrapper">
+    <div id="step-nav"><!-- rendered by JS --></div>
+  </div>
+
+  <!-- Main Content Panel -->
+  <main id="step-content" role="main">
+    <!-- Step content rendered by app.js -->
+    <div style="padding:2rem; text-align:center; color:#6b7280">
+      <p>Loading calculator...</p>
+    </div>
+  </main>
+
+  <!-- Sidebar -->
+  <aside id="sidebar">
+    <!-- Live Summary -->
+    <div class="sidebar-card">
+      <h4>Live Tax Estimate</h4>
+      <div id="live-summary">
+        <div class="live-row"><span>Total Income</span><span>$0.00</span></div>
+        <div class="live-row"><span>AGI</span><span>$0.00</span></div>
+        <div class="live-row"><span>Taxable Income</span><span>$0.00</span></div>
+        <div class="live-row highlight"><span>Total Tax</span><span>$0.00</span></div>
+        <div class="live-row"><span>Balance</span><span>$0.00</span></div>
+      </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="sidebar-card">
+      <div class="nav-buttons">
+        <button class="btn-secondary" onclick="prevStep()">← Back</button>
+        <button class="btn-primary"   onclick="nextStep()">Next →</button>
+      </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="sidebar-card" style="font-size:0.75rem; color:#9ca3af; line-height:1.5">
+      <strong style="color:#6b7280; display:block; margin-bottom:0.25rem">Disclaimer</strong>
+      This calculator provides estimates for informational purposes only. It does not constitute tax advice. Consult a licensed tax professional for your specific situation. All calculations are performed locally — your data never leaves your browser.
+    </div>
+  </aside>
+</div>
+
+<!-- ── Help Modal ─────────────────────────────────────────── -->
+<div id="help-modal" role="dialog" aria-modal="true" aria-labelledby="help-title">
+  <div class="help-modal-inner">
+    <div class="help-modal-header">
+      <h3 id="help-title">ℹ️ Learn More</h3>
+      <button class="help-close" onclick="closeHelp()" aria-label="Close">✕</button>
+    </div>
+    <div id="help-body"></div>
+  </div>
+</div>
+
+<!-- ── Scripts ────────────────────────────────────────────── -->
+<script src="js/taxRules.js"></script>
+<script src="js/calculator.js"></script>
+<script src="js/ocr.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
