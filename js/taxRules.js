@@ -1,103 +1,106 @@
 'use strict';
 // ============================================================
-//  IRS TAX RULES — TAX YEAR 2024
-//  All values sourced from IRS Rev. Proc. 2023-34 and related
-//  publications. No external API calls required at runtime.
+//  IRS TAX RULES — TAX YEAR 2025
+//  Sources: IRS Rev. Proc. 2024-40, IR-2024-273
+//  Brackets confirmed at irs.gov/filing/federal-income-tax-rates-and-brackets
+//  EIC confirmed at irs.gov EITC tables
+//  No external API calls required at runtime.
 // ============================================================
 
-const TAX_YEAR = 2024;
+const TAX_YEAR = 2025;
 
 // ── Standard Deductions ──────────────────────────────────────
 const STANDARD_DEDUCTION = {
-  single:  14600,
-  mfj:     29200,
-  mfs:     14600,
-  hoh:     21900,
-  qss:     29200
+  single:  15000,
+  mfj:     30000,
+  mfs:     15000,
+  hoh:     22500,
+  qss:     30000
 };
 
 // Additional std deduction per box (age 65+ OR blind)
 const ADDITIONAL_STD_DEDUCTION = {
-  single_hoh:  1950,  // each qualifying condition
-  other:       1550   // each qualifying condition (MFJ, MFS, QSS)
+  single_hoh:  2000,  // each qualifying condition
+  other:       1600   // each qualifying condition (MFJ, MFS, QSS)
 };
 
 // ── Ordinary Income Tax Brackets ────────────────────────────
 // Each row: [lowerBound, upperBound, rate]
+// Source: IRS Rev. Proc. 2024-40 / IR-2024-273
 const ORDINARY_BRACKETS = {
   single: [
-    [0,       11600,    0.10],
-    [11600,   47150,    0.12],
-    [47150,   100525,   0.22],
-    [100525,  191950,   0.24],
-    [191950,  243725,   0.32],
-    [243725,  609350,   0.35],
-    [609350,  Infinity, 0.37]
+    [0,       11925,    0.10],
+    [11925,   48475,    0.12],
+    [48475,   103350,   0.22],
+    [103350,  197300,   0.24],
+    [197300,  250525,   0.32],
+    [250525,  626350,   0.35],
+    [626350,  Infinity, 0.37]
   ],
   mfj: [
-    [0,       23200,    0.10],
-    [23200,   94300,    0.12],
-    [94300,   201050,   0.22],
-    [201050,  383900,   0.24],
-    [383900,  487450,   0.32],
-    [487450,  731200,   0.35],
-    [731200,  Infinity, 0.37]
+    [0,       23850,    0.10],
+    [23850,   96950,    0.12],
+    [96950,   206700,   0.22],
+    [206700,  394600,   0.24],
+    [394600,  501050,   0.32],
+    [501050,  751600,   0.35],
+    [751600,  Infinity, 0.37]
   ],
   mfs: [
-    [0,       11600,    0.10],
-    [11600,   47150,    0.12],
-    [47150,   100525,   0.22],
-    [100525,  191950,   0.24],
-    [191950,  243725,   0.32],
-    [243725,  365600,   0.35],
-    [365600,  Infinity, 0.37]
+    [0,       11925,    0.10],
+    [11925,   48475,    0.12],
+    [48475,   103350,   0.22],
+    [103350,  197300,   0.24],
+    [197300,  250525,   0.32],
+    [250525,  375800,   0.35],
+    [375800,  Infinity, 0.37]
   ],
   hoh: [
-    [0,       16550,    0.10],
-    [16550,   63100,    0.12],
-    [63100,   100500,   0.22],
-    [100500,  191950,   0.24],
-    [191950,  243700,   0.32],
-    [243700,  609350,   0.35],
-    [609350,  Infinity, 0.37]
+    [0,       17000,    0.10],
+    [17000,   64850,    0.12],
+    [64850,   103350,   0.22],
+    [103350,  197300,   0.24],
+    [197300,  250500,   0.32],
+    [250500,  626350,   0.35],
+    [626350,  Infinity, 0.37]
   ],
   qss: [ // same as MFJ
-    [0,       23200,    0.10],
-    [23200,   94300,    0.12],
-    [94300,   201050,   0.22],
-    [201050,  383900,   0.24],
-    [383900,  487450,   0.32],
-    [487450,  731200,   0.35],
-    [731200,  Infinity, 0.37]
+    [0,       23850,    0.10],
+    [23850,   96950,    0.12],
+    [96950,   206700,   0.22],
+    [206700,  394600,   0.24],
+    [394600,  501050,   0.32],
+    [501050,  751600,   0.35],
+    [751600,  Infinity, 0.37]
   ]
 };
 
 // ── Long-Term Capital Gains / Qualified Dividends Brackets ──
 const LTCG_BRACKETS = {
   single: [
-    [0,       47025,    0.00],
-    [47025,   518900,   0.15],
-    [518900,  Infinity, 0.20]
+    [0,       48350,    0.00],
+    [48350,   533400,   0.15],
+    [533400,  Infinity, 0.20]
   ],
   mfj: [
-    [0,       94050,    0.00],
-    [94050,   583750,   0.15],
-    [583750,  Infinity, 0.20]
+    [0,       96700,    0.00],
+    [96700,   600050,   0.15],
+    [600050,  Infinity, 0.20]
   ],
   mfs: [
-    [0,       47025,    0.00],
-    [47025,   291850,   0.15],
-    [291850,  Infinity, 0.20]
+    [0,       48350,    0.00],
+    [48350,   300000,   0.15],
+    [300000,  Infinity, 0.20]
   ],
   hoh: [
-    [0,       63000,    0.00],
-    [63000,   551350,   0.15],
-    [551350,  Infinity, 0.20]
+    [0,       64750,    0.00],
+    [64750,   566700,   0.15],
+    [566700,  Infinity, 0.20]
   ],
   qss: [
-    [0,       94050,    0.00],
-    [94050,   583750,   0.15],
-    [583750,  Infinity, 0.20]
+    [0,       96700,    0.00],
+    [96700,   600050,   0.15],
+    [600050,  Infinity, 0.20]
   ]
 };
 
@@ -105,7 +108,7 @@ const LTCG_BRACKETS = {
 const SE_TAX = {
   ssRate:               0.124,
   medicareRate:         0.029,
-  ssCap:                168600,   // SS wage base 2024
+  ssCap:                176100,   // SS wage base 2025 (up from $168,600)
   addlMedicareRate:     0.009,
   addlMedicareThreshold: {
     single: 200000, mfj: 250000, mfs: 125000, hoh: 200000, qss: 250000
@@ -121,111 +124,112 @@ const NIIT = {
 };
 
 // ── Alternative Minimum Tax (AMT) ───────────────────────────
+// Source: IRS Rev. Proc. 2024-40
 const AMT = {
   exemption: {
-    single: 85700, mfj: 133300, mfs: 66650, hoh: 85700, qss: 133300
+    single: 88100, mfj: 137000, mfs: 68500, hoh: 88100, qss: 137000
   },
   phaseoutStart: {
-    single: 609350, mfj: 1218700, mfs: 609350, hoh: 609350, qss: 1218700
+    single: 626350, mfj: 1252700, mfs: 626350, hoh: 626350, qss: 1252700
   },
   rate1: 0.26,
   rate2: 0.28,
-  breakpoint: 220700  // income above which 28% applies (not filing-status-adjusted)
+  breakpoint: 239100  // 28% applies above this (up from $220,700 in 2024)
 };
 
 // ── Child Tax Credit (CTC) ───────────────────────────────────
 const CTC = {
-  perQualifyingChild:   2000,
+  perQualifyingChild:   2000,   // not inflation-adjusted
   perOtherDependent:    500,
   phaseoutStart: {
     single: 200000, mfj: 400000, mfs: 200000, hoh: 200000, qss: 400000
   },
   phaseoutPer1000:      50,    // $50 reduction per $1,000 over threshold
-  maxRefundable:        1700,  // Additional CTC
+  maxRefundable:        1700,  // Additional CTC (unchanged for 2025)
   refundableRate:       0.15,
   earningsFloor:        2500   // must have > $2,500 earned income for ACTC
 };
 
 // ── Earned Income Credit (EIC/EITC) ─────────────────────────
-// Algorithmic approximation; actual IRS uses interpolated tables
+// Source: irs.gov EITC tables, IR-2024-273
 const EIC = {
-  // Maximum investment income allowed
-  maxInvestmentIncome: 11600,
-  maxAge:              { noChildren: { min: 25, max: 64 } },  // without children
+  maxInvestmentIncome: 11950,  // up from $11,600
+  maxAge:              { noChildren: { min: 25, max: 64 } },
   data: {
-    // [children]: { maxCredit, phaseInRate, phaseInEnd, plateauEnd_single, plateauEnd_mfj, phaseOutRate, maxIncome_single, maxIncome_mfj }
-    0: { maxCredit: 632,  phaseInRate: 0.0765, phaseInEnd: 8260,  plateauEnd: { single: 9524,  mfj: 16370 }, phaseOutRate: 0.0765, maxIncome: { single: 18591, mfj: 25511 } },
-    1: { maxCredit: 4213, phaseInRate: 0.3400, phaseInEnd: 11610, plateauEnd: { single: 21560, mfj: 21560 }, phaseOutRate: 0.1598, maxIncome: { single: 49084, mfj: 56004 } },
-    2: { maxCredit: 6960, phaseInRate: 0.4000, phaseInEnd: 14590, plateauEnd: { single: 21560, mfj: 21560 }, phaseOutRate: 0.2106, maxIncome: { single: 55768, mfj: 62688 } },
-    3: { maxCredit: 7830, phaseInRate: 0.4500, phaseInEnd: 14590, plateauEnd: { single: 21560, mfj: 21560 }, phaseOutRate: 0.2106, maxIncome: { single: 59899, mfj: 66819 } }
+    0: { maxCredit: 649,  phaseInRate: 0.0765, phaseInEnd: 8490,  plateauEnd: { single: 9800,  mfj: 16840 }, phaseOutRate: 0.0765, maxIncome: { single: 19104, mfj: 26214 } },
+    1: { maxCredit: 4328, phaseInRate: 0.3400, phaseInEnd: 11940, plateauEnd: { single: 22200, mfj: 22200 }, phaseOutRate: 0.1598, maxIncome: { single: 50434, mfj: 57554 } },
+    2: { maxCredit: 7152, phaseInRate: 0.4000, phaseInEnd: 15010, plateauEnd: { single: 22200, mfj: 22200 }, phaseOutRate: 0.2106, maxIncome: { single: 57310, mfj: 64430 } },
+    3: { maxCredit: 8046, phaseInRate: 0.4500, phaseInEnd: 15010, plateauEnd: { single: 22200, mfj: 22200 }, phaseOutRate: 0.2106, maxIncome: { single: 61555, mfj: 68675 } }
   }
 };
 
 // ── IRA Limits ───────────────────────────────────────────────
+// Source: IRS Rev. Proc. 2024-40
 const IRA = {
-  contribution: { under50: 7000, over50: 8000 },
+  contribution: { under50: 7000, over50: 8000 },  // unchanged for 2025
   // Traditional IRA deductibility phaseout (if covered by workplace plan)
   traditionalPhaseout: {
     covered: {
-      single: { start: 77000,  end: 87000 },
-      mfj:    { start: 123000, end: 143000 },
+      single: { start: 79000,  end: 89000  },  // up from $77k-$87k
+      mfj:    { start: 126000, end: 146000 },  // up from $123k-$143k
       mfs:    { start: 0,      end: 10000  },
-      hoh:    { start: 77000,  end: 87000  }
+      hoh:    { start: 79000,  end: 89000  }
     },
     // Spouse covered but taxpayer is not
     spouseCovered: {
-      mfj:    { start: 230000, end: 240000 }
+      mfj:    { start: 236000, end: 246000 }   // up from $230k-$240k
     }
   },
   // Roth IRA contribution phaseout
   rothPhaseout: {
-    single: { start: 146000, end: 161000 },
-    mfj:    { start: 230000, end: 240000 },
+    single: { start: 150000, end: 165000 },  // up from $146k-$161k
+    mfj:    { start: 236000, end: 246000 },  // up from $230k-$240k
     mfs:    { start: 0,      end: 10000  },
-    hoh:    { start: 146000, end: 161000 },
-    qss:    { start: 230000, end: 240000 }
+    hoh:    { start: 150000, end: 165000 },
+    qss:    { start: 236000, end: 246000 }
   }
 };
 
 // ── Health Savings Account (HSA) ─────────────────────────────
+// Source: IRS Rev. Proc. 2024-25
 const HSA = {
-  selfOnly:        4150,
-  family:          8300,
-  additionalAge55: 1000
+  selfOnly:        4300,  // up from $4,150
+  family:          8550,  // up from $8,300
+  additionalAge55: 1000   // unchanged
 };
 
 // ── Qualified Business Income Deduction (Sec. 199A) ─────────
 const QBI = {
   rate: 0.20,
   phaseoutStart: {
-    single: 191950, mfj: 383900, mfs: 191950, hoh: 191950, qss: 383900
+    single: 197300, mfj: 394600, mfs: 197300, hoh: 197300, qss: 394600
   },
   phaseoutEnd: {
-    single: 241950, mfj: 483900, mfs: 241950, hoh: 241950, qss: 483900
+    single: 247300, mfj: 494600, mfs: 247300, hoh: 247300, qss: 494600
   }
 };
 
 // ── Student Loan Interest Deduction ─────────────────────────
 const STUDENT_LOAN = {
-  maxDeduction: 2500,
+  maxDeduction: 2500,  // unchanged
   phaseout: {
-    single: { start: 80000,  end: 95000  },
-    mfj:    { start: 165000, end: 195000 },
-    hoh:    { start: 80000,  end: 95000  }
+    single: { start: 85000,  end: 100000 },  // up from $80k-$95k
+    mfj:    { start: 170000, end: 200000 },  // up from $165k-$195k
+    hoh:    { start: 85000,  end: 100000 }
     // MFS: not eligible
   }
 };
 
 // ── SALT Cap ─────────────────────────────────────────────────
-const SALT_CAP = { normal: 10000, mfs: 5000 };
+const SALT_CAP = { normal: 10000, mfs: 5000 };  // unchanged (statutory)
 
 // ── Child & Dependent Care Credit ───────────────────────────
 const CDCC = {
-  maxExpenses:    { one: 3000, twoPlus: 6000 },
+  maxExpenses:    { one: 3000, twoPlus: 6000 },  // unchanged
   baseRate:       0.20,
   maxRate:        0.35,
   phasedownStart: 15000,
-  phasedownPer2000: 0.01  // 1% reduction per $2,000 AGI over $15,000
+  phasedownPer2000: 0.01
 };
 
 // ── American Opportunity Credit (AOC) ───────────────────────
@@ -233,10 +237,10 @@ const AOC = {
   maxCredit:         2500,
   refundablePercent: 0.40,
   qualifiedExpenses: 4000,
-  creditRate1:       1.00,  // 100% of first $2,000
-  creditRate2:       0.25,  // 25% of next $2,000
+  creditRate1:       1.00,
+  creditRate2:       0.25,
   phaseout: {
-    single: { start: 80000,  end: 90000  },
+    single: { start: 80000,  end: 90000  },  // unchanged
     mfj:    { start: 160000, end: 180000 }
   }
 };
@@ -247,44 +251,44 @@ const LLC_CREDIT = {
   maxExpenses:  10000,
   maxCredit:    2000,
   phaseout: {
-    single: { start: 80000,  end: 90000  },
+    single: { start: 80000,  end: 90000  },  // unchanged
     mfj:    { start: 160000, end: 180000 }
   }
 };
 
 // ── Retirement Saver's Credit (Form 8880) ───────────────────
+// Source: IRS Rev. Proc. 2024-40
 const SAVERS_CREDIT = {
   maxContribution: 2000,
-  // [maxAGI, rate] — use highest applicable rate
   brackets: {
     single: [
-      [22500,    0.50],
-      [24500,    0.34],
-      [37500,    0.10],
+      [23000,    0.50],
+      [25000,    0.34],
+      [38000,    0.10],
       [Infinity, 0.00]
     ],
     mfj: [
-      [45000,    0.50],
-      [49000,    0.34],
-      [75000,    0.10],
+      [46000,    0.50],
+      [50000,    0.34],
+      [76500,    0.10],
       [Infinity, 0.00]
     ],
     hoh: [
-      [33750,    0.50],
-      [36750,    0.34],
-      [56250,    0.10],
+      [34500,    0.50],
+      [37500,    0.34],
+      [57000,    0.10],
       [Infinity, 0.00]
     ],
     mfs: [
-      [22500,    0.50],
-      [24500,    0.34],
-      [37500,    0.10],
+      [23000,    0.50],
+      [25000,    0.34],
+      [38000,    0.10],
       [Infinity, 0.00]
     ],
     qss: [
-      [45000,    0.50],
-      [49000,    0.34],
-      [75000,    0.10],
+      [46000,    0.50],
+      [50000,    0.34],
+      [76500,    0.10],
       [Infinity, 0.00]
     ]
   }
@@ -292,79 +296,71 @@ const SAVERS_CREDIT = {
 
 // ── Social Security Benefit Taxability ──────────────────────
 const SS_COMBINED_INCOME = {
-  // combined income = AGI + nontaxable interest + 50% of SS benefits
-  single_hoh: { t1: 25000, t2: 34000 },
+  single_hoh: { t1: 25000, t2: 34000 },  // unchanged (not inflation-adjusted)
   mfj:        { t1: 32000, t2: 44000 },
-  mfs_livedTogether: { alwaysUpTo85: true }  // lived with spouse: always up to 85%
+  mfs_livedTogether: { alwaysUpTo85: true }
 };
 
 // ── Section 121 Home Sale Exclusion ─────────────────────────
 const HOME_SALE = {
-  single: 250000,
+  single: 250000,  // unchanged (statutory)
   mfj:    500000
 };
 
 // ── Residential Clean Energy Credit (Form 5695 Pt. I) ───────
 const CLEAN_ENERGY_CREDIT = {
   rate: 0.30
-  // No dollar cap for 2024; unlimited for solar, wind, geothermal, battery
 };
 
 // ── Energy Efficient Home Improvement Credit (Form 5695 Pt. II) ─
 const ENERGY_IMPROVEMENT_CREDIT = {
-  annualCap:   1200,  // overall cap (excluding heat pumps)
-  heatPumpCap: 2000,  // separate cap for heat pumps / heat pump water heaters
+  annualCap:   1200,
+  heatPumpCap: 2000,
   items: {
     windows:     { rate: 0.30, cap: 600  },
-    doors:       { rate: 0.30, cap: 500  },  // $250 per door, 2 max
+    doors:       { rate: 0.30, cap: 500  },
     roofing:     { rate: 0.30, cap: 600  },
     hvac:        { rate: 0.30, cap: 600  },
     insulation:  { rate: 0.30, noCap: true },
-    heatPump:    { rate: 0.30, cap: 2000 },  // uses separate $2,000 limit
+    heatPump:    { rate: 0.30, cap: 2000 },
     waterHeater: { rate: 0.30, cap: 600  },
     energyAudit: { rate: 0.30, cap: 150  }
   }
 };
 
-// ── 401(k) / Retirement Plan Limits (W-2 Box 12) ────────────
+// ── 401(k) / Retirement Plan Limits ─────────────────────────
+// Source: IRS IR-2024-285
 const RETIREMENT_PLAN_LIMITS = {
-  '401k':    { under50: 23000, over50: 30500 },
-  '403b':    { under50: 23000, over50: 30500 },
-  'SIMPLE':  { under50: 16000, over50: 19500 },
-  'SEP':     { rate: 0.25, max: 69000 },       // 25% of comp, capped
-  'SOLO401k':{ under50: 23000, over50: 30500 } // employee contribution
+  '401k':    { under50: 23500, over50: 31000 },  // up from $23k/$30.5k
+  '403b':    { under50: 23500, over50: 31000 },
+  'SIMPLE':  { under50: 16500, over50: 20000 },  // up from $16k/$19.5k
+  'SEP':     { rate: 0.25, max: 70000 },          // up from $69,000
+  'SOLO401k':{ under50: 23500, over50: 31000 }
 };
 
 // ── Early Withdrawal Penalty ─────────────────────────────────
 const EARLY_WITHDRAWAL = {
   penaltyRate: 0.10,
-  // Distribution codes that ARE subject to penalty (IRS Form 1099-R Box 7)
   penaltyCodes: ['1'],
-  // Distribution codes exempt from penalty
   exemptCodes: ['2','3','4','5','6','7','8','9','A','B','C','D','E','F','G','H','J','K','L','M','N','P','Q','R','S','T','U','W']
 };
 
 // ── Educator Expense Deduction ───────────────────────────────
-const EDUCATOR = { max: 300, maxEach: 300 };
+const EDUCATOR = { max: 300, maxEach: 300 };  // unchanged
 
 // ── Alimony Rules ────────────────────────────────────────────
 const ALIMONY = {
-  // Post-TCJA (divorce after 12/31/2018): alimony NOT deductible/includible
-  // Pre-TCJA (divorce before 1/1/2019): alimony IS deductible paid / includible received
   tcjaCutoff: new Date('2019-01-01')
 };
 
 // ── Premium Tax Credit (ACA, Form 8962) ─────────────────────
-// Simplified — actual calculation requires FPL lookup table and 1095-A
 const PTC = {
-  // Income range: 100%–400% FPL (no upper limit through 2025 per Inflation Reduction Act)
-  // Actual credit computed on Form 8962 comparing benchmark premium to cap %
   note: 'Requires Form 1095-A from marketplace. Credit phased down based on income relative to FPL.'
 };
 
 // ── Foreign Tax Credit ───────────────────────────────────────
 const FOREIGN_TAX = {
-  simpleLimit: 300,  // $300 single / $600 MFJ — can claim on Sch. B without Form 1116
+  simpleLimit: 300,
   simpleLimit_mfj: 600
 };
 
@@ -377,7 +373,7 @@ const DEPRECIATION = {
 
 // ── Passive Activity Loss (PAL) Rules ───────────────────────
 const PASSIVE_ACTIVITY = {
-  rentalRealEstateAllowance: 25000,  // special $25K allowance for active participation
+  rentalRealEstateAllowance: 25000,
   phaseoutStart: 100000,
   phaseoutEnd:   150000
 };
@@ -404,7 +400,7 @@ Your cost basis is what you paid for it. Gain = Proceeds − Cost Basis − Comm
 
   qualifiedDividends: `Dividends that meet IRS requirements are "qualified" and taxed at the lower long-term capital gains rates (0–20%) instead of ordinary income rates. Most dividends from U.S. corporations held for the required holding period qualify.`,
 
-  standardDeduction: `A flat dollar amount that reduces your taxable income. For 2024: $14,600 (Single), $29,200 (MFJ), $21,900 (HOH). You choose the HIGHER of your standard deduction or your itemized deductions. Most taxpayers use the standard deduction because it's larger.`,
+  standardDeduction: `A flat dollar amount that reduces your taxable income. For 2025: $15,000 (Single), $30,000 (MFJ), $22,500 (HOH). You choose the HIGHER of your standard deduction or your itemized deductions. Most taxpayers use the standard deduction because it's larger.`,
 
   itemizedDeductions: `Instead of the standard deduction, you can list actual deductible expenses on Schedule A. Common items: mortgage interest, state/local taxes (capped at $10,000), charitable donations, and large medical expenses. Only worthwhile if your total exceeds the standard deduction.`,
 
@@ -422,7 +418,7 @@ Your cost basis is what you paid for it. Gain = Proceeds − Cost Basis − Comm
 
   niit: `The Net Investment Income Tax (NIIT) is an additional 3.8% tax on investment income (interest, dividends, capital gains, rental income) when your Modified AGI exceeds $200,000 (single) or $250,000 (MFJ). It was created by the Affordable Care Act to fund Medicare.`,
 
-  amt: `The Alternative Minimum Tax (AMT) is a parallel tax system that limits the benefit of certain deductions. You calculate your tax both ways and pay whichever is higher. It primarily affects people with high incomes who have many deductions. The AMT exemption of $85,700 (single) / $133,300 (MFJ) means most middle-income taxpayers are not affected.`,
+  amt: `The Alternative Minimum Tax (AMT) is a parallel tax system that limits the benefit of certain deductions. You calculate your tax both ways and pay whichever is higher. It primarily affects people with high incomes who have many deductions. The AMT exemption of $88,100 (single) / $137,000 (MFJ) means most middle-income taxpayers are not affected.`,
 
   socialSecurity: `Up to 85% of your Social Security benefits may be taxable depending on your "combined income" (AGI + nontaxable interest + 50% of SS benefits). If your combined income is under $25,000 (single) or $32,000 (MFJ), none is taxable.`,
 
@@ -438,7 +434,7 @@ Your cost basis is what you paid for it. Gain = Proceeds − Cost Basis − Comm
 
   iraDeduction: `Contributions to a traditional IRA may be tax-deductible, reducing your current income. Deductibility depends on your income and whether you (or your spouse) are covered by a workplace retirement plan. The deduction phases out at higher incomes. Roth IRA contributions are never deductible, but qualified withdrawals are tax-free.`,
 
-  estimatedTax: `If you have income not subject to withholding (self-employment, investments, rental income), you may need to make quarterly estimated tax payments to avoid an underpayment penalty. Payments are due April 15, June 17, September 16, and January 15.`,
+  estimatedTax: `If you have income not subject to withholding (self-employment, investments, rental income), you may need to make quarterly estimated tax payments to avoid an underpayment penalty. Payments are due April 15, June 16, September 15, and January 15.`,
 
   effectiveRate: `Your effective (average) tax rate = Total Tax ÷ Total Income. This is your real overall tax burden as a percentage. It's different from your marginal rate, which is the rate on your LAST dollar of income. Most people's effective rate is lower than their marginal rate because lower income portions are taxed at lower rates.`
 };

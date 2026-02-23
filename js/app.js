@@ -234,7 +234,7 @@ function renderStep1() {
         ${textInput('personalInfo.lastName', state.personalInfo.lastName, 'Last Name', 'Last Name')}
       </div>
       <div class="grid-2">
-        ${textInput('personalInfo.age', state.personalInfo.age, 'e.g. 35', 'Your Age (as of Dec 31, 2024)')}
+        ${textInput('personalInfo.age', state.personalInfo.age, 'e.g. 35', 'Your Age (as of Dec 31, 2025)')}
         ${textInput('personalInfo.occupation', state.personalInfo.occupation, 'e.g. Software Engineer', 'Occupation')}
       </div>
       ${checkboxInput('personalInfo.blind', state.personalInfo.blind, 'I am blind or severely visually impaired (increases standard deduction)')}
@@ -264,7 +264,7 @@ function renderStep1() {
         ${textInput('personalInfo.spouseFirstName', state.personalInfo.spouseFirstName, 'First Name', "Spouse's First Name")}
         ${textInput('personalInfo.spouseLastName', state.personalInfo.spouseLastName, 'Last Name', "Spouse's Last Name")}
       </div>
-      ${textInput('personalInfo.spouseAge', state.personalInfo.spouseAge, 'e.g. 33', "Spouse's Age (as of Dec 31, 2024)")}
+      ${textInput('personalInfo.spouseAge', state.personalInfo.spouseAge, 'e.g. 33', "Spouse's Age (as of Dec 31, 2025)")}
       ${checkboxInput('personalInfo.spouseBlind', state.personalInfo.spouseBlind, 'Spouse is blind or severely visually impaired')}
     </div>` : ''}
 
@@ -677,7 +677,7 @@ function renderStep7() {
     <div class="card">
       <h3>Home Sale (Primary Residence) ${helpBtn('homeSale')}</h3>
       <p class="note">If you sold your primary home, you may exclude up to $250,000 of gain ($500,000 MFJ) if you lived there 2 of the last 5 years.</p>
-      ${checkboxInput('other.soldHome', state.other.soldHome, 'I sold my primary home in 2024')}
+      ${checkboxInput('other.soldHome', state.other.soldHome, 'I sold my primary home in 2025')}
       ${state.other.soldHome ? `
       <div class="grid-2">
         ${moneyInput('other.homeSaleProceeds', state.other.homeSaleProceeds, '0.00', 'Selling Price')}
@@ -923,7 +923,7 @@ function renderStep10() {
 
     <div class="card">
       <h3>Retirement Saver's Credit ${helpBtn('eic')}</h3>
-      ${moneyInput('credits.retirementContributions', state.credits.retirementContributions, '0.00', 'Your 2024 Retirement Contributions (IRA, 401k — not employer match)')}
+      ${moneyInput('credits.retirementContributions', state.credits.retirementContributions, '0.00', 'Your 2025 Retirement Contributions (IRA, 401k — not employer match)')}
     </div>
 
     <div class="card">
@@ -976,7 +976,7 @@ function renderStep11() {
     <div class="card">
       <h3>Estimated Tax Payments ${helpBtn('estimatedTax')}</h3>
       <p class="note">If you made quarterly estimated tax payments directly to the IRS, enter the total here.</p>
-      ${moneyInput('payments.estimatedTax', state.payments.estimatedTax, '0.00', 'Total 2024 Estimated Tax Payments Made')}
+      ${moneyInput('payments.estimatedTax', state.payments.estimatedTax, '0.00', 'Total 2025 Estimated Tax Payments Made')}
       ${moneyInput('payments.extensionPayment', state.payments.extensionPayment, '0.00', 'Payment Made with Extension (Form 4868)')}
     </div>
   `;
@@ -1024,7 +1024,7 @@ function renderStep12() {
     const isRefund = res.balance < 0;
     return `
     <div class="step-header">
-      <h2>Your 2024 Tax Summary</h2>
+      <h2>Your 2025 Tax Summary</h2>
       <p class="step-desc">Here's your complete federal income tax calculation. Review each section below.</p>
     </div>
 
@@ -1116,7 +1116,7 @@ function renderStep12() {
       <ul>
         <li>This calculator provides <strong>estimates only</strong> — verify with a tax professional or official IRS forms</li>
         <li>File your federal return at <strong>IRS Free File</strong> (if income ≤ $79,000) or use tax software</li>
-        ${res.balance > 1000 ? '<li><strong>Avoid underpayment penalties</strong> by making quarterly estimated payments in 2025</li>' : ''}
+        ${res.balance > 1000 ? '<li><strong>Avoid underpayment penalties</strong> by making quarterly estimated payments in 2026</li>' : ''}
         ${res.seTax.totalSETax > 0 ? '<li>Consider a <strong>SEP-IRA or Solo 401(k)</strong> to reduce self-employment income and taxes</li>' : ''}
         ${res.amtAdditional > 0 ? '<li>You owe AMT — consider consulting a CPA for AMT planning strategies</li>' : ''}
       </ul>
@@ -1194,10 +1194,10 @@ function removeItem(section, index) {
 }
 
 function exportData() {
-  const blob = new Blob([JSON.stringify({ taxYear: 2024, state, result: calculateTax(state) }, null, 2)], { type: 'application/json' });
+  const blob = new Blob([JSON.stringify({ taxYear: 2025, state, result: calculateTax(state) }, null, 2)], { type: 'application/json' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'tax-data-2024.json';
+  a.download = 'tax-data-2025.json';
   a.click();
 }
 
