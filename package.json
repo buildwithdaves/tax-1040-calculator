@@ -1,0 +1,24 @@
+{
+  "name": "tax-1040-calculator",
+  "version": "1.0.0",
+  "description": "A **free, comprehensive, privacy-first** federal income tax calculator for Form 1040. All calculations run 100% in your browser — no data is ever sent to a server.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/buildwithdaves/tax-1040-calculator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/buildwithdaves/tax-1040-calculator/issues"
+  },
+  "homepage": "https://github.com/buildwithdaves/tax-1040-calculator#readme",
+  "dependencies": {
+    "tesseract.js": "5.1.1"
+  }
+}

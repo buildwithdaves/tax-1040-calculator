@@ -140,6 +140,7 @@ const OCRModule = (() => {
     onProgress && onProgress(0, 'Loading image...');
 
     const worker = await Tesseract.createWorker('eng', 1, {
+      workerPath: 'vendor/worker.min.js',
       logger: m => {
         if (m.status === 'recognizing text' && onProgress) {
           onProgress(Math.round(m.progress * 90), `Reading document... ${Math.round(m.progress * 100)}%`);
